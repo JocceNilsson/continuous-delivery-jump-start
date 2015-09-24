@@ -12,7 +12,7 @@ apply plugin: 'war'
 apply plugin: 'idea'
 apply plugin: 'com.bmuschko.tomcat'
 apply plugin: 'eclipse'
-
+apply from: "$rootDir/gradle/wrapper/junit-tests.gradle"
 group = 'org.gradle.training'
 
 sourceCompatibility = 1.7
