@@ -12,6 +12,7 @@ apply plugin: 'war'
 apply plugin: 'idea'
 apply plugin: 'com.bmuschko.tomcat'
 apply plugin: 'eclipse'
+apply plugin: "findbugs"
 apply from: "$rootDir/gradle/wrapper/junit-tests.gradle"
 apply from: "$rootDir/gradle/wrapper/integration-tests.gradle"
 group = 'org.gradle.training'
@@ -44,4 +45,15 @@ dependencies {
 tomcat {
     contextPath = 'sample-app'
 	httpPort = 8686
+}
+
+findbugs {
+	ignoreFailures = true
+}
+
+tasks.withType(FindBugs) {
+	reports {
+		xml.enabled = true
+		html.enabled = false
+	}
 }
