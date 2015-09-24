@@ -52,5 +52,7 @@ test{
 	
 	maxParallelForks = Runtime.getRuntime().availableProcessors()
 	
-	
+    testLogging {
+        events 'skipped'
+    }
 }
