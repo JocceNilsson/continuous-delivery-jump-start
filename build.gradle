@@ -13,6 +13,7 @@ apply plugin: 'idea'
 apply plugin: 'com.bmuschko.tomcat'
 apply plugin: 'eclipse'
 apply from: "$rootDir/gradle/wrapper/junit-tests.gradle"
+apply from: "$rootDir/gradle/wrapper/integration-tests.gradle"
 group = 'org.gradle.training'
 
 sourceCompatibility = 1.7
@@ -32,6 +33,7 @@ dependencies {
     runtime 'jstl:jstl:1.2'
     testCompile 'junit:junit:4.11'
     testCompile 'org.mockito:mockito-all:1.10.8'
+	integrationTestCompile "org.springframework:spring-test:4.1.1.RELEASE"
 
     def tomcatVersion = '7.0.62'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
