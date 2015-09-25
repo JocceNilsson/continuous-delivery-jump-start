@@ -12,7 +12,7 @@ task deploy (dependsOn: assemble){
 				execute 'sudo service tomcat7 stop'
 				put war.archivePath, '/tmp/'
 				execute "sudo rm -rf /var/lib/tomcat7/webapps/continuous*"
-				execute "sudo mv /tmp/${war.archivePath.name} /var/lib/tomcat7/webapps/"
+				execute "sudo mv /tmp/${war.archivePath.name} /var/lib/tomcat7/webapps/continuous-delivery.war"
 				execute 'sudo service tomcat7 start'
 			}
 		}
