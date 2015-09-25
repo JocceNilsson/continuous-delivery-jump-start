@@ -1,15 +1,17 @@
 import java.text.SimpleDateFormat;
-
+	
 buildscript {
     repositories {
         jcenter()
     }
 
     dependencies {
+    	classpath 'org.hidetake:gradle-ssh-plugin:0.4.5'
         classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.2'
     }
 }
 
+apply plugin: 'org.hidetake.ssh'
 apply plugin: 'war'
 apply plugin: 'idea'
 apply plugin: 'com.bmuschko.tomcat'
@@ -19,6 +21,7 @@ apply plugin: "findbugs"
 apply from: "$rootDir/gradle/wrapper/junit-tests.gradle"
 apply from: "$rootDir/gradle/wrapper/integration-tests.gradle"
 apply from: "$rootDir/gradle/wrapper/jacoco.gradle"
+apply from: "$rootDir/gradle/wrapper/deploy.gradle"
 group = 'org.gradle.training'
 
 version = new MyVersion(major:1,minor:2,date:new Date())
@@ -86,3 +89,4 @@ uploadArchives {
 		}
 	}
 }
+

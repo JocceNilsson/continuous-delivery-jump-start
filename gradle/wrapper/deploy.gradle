@@ -1,0 +1,20 @@
+remotes {
+	webServer {
+		host = '10.1.1.33'
+		user = 'vagrant'
+		password = 'vagrant'
+	}
+}
+task deploy (dependsOn: assemble){
+	doLast {
+		ssh.run {
+			session(remotes.webServer) {
+				execute 'sudo service tomcat7 stop'
+				put war.archivePath, '/tmp/'
+				execute "sudo rm -rf /var/lib/tomcat7/webapps/continuous*"
+				execute "sudo mv /tmp/${war.archivePath.name} /var/lib/tomcat7/webapps/"
+				execute 'sudo service tomcat7 start'
+			}
+		}
+	}
+}
