@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat;
+
 buildscript {
     repositories {
         jcenter()
@@ -12,10 +14,26 @@ apply plugin: 'war'
 apply plugin: 'idea'
 apply plugin: 'com.bmuschko.tomcat'
 apply plugin: 'eclipse'
+apply plugin: 'maven'
 apply plugin: "findbugs"
 apply from: "$rootDir/gradle/wrapper/junit-tests.gradle"
 apply from: "$rootDir/gradle/wrapper/integration-tests.gradle"
+apply from: "$rootDir/gradle/wrapper/jacoco.gradle"
 group = 'org.gradle.training'
+
+version = new MyVersion(major:1,minor:2,date:new Date())
+
+class MyVersion{
+	int major
+	int minor
+	Date date
+	@Override
+	String toString(){
+		def f = new java.text.SimpleDateFormat("mmss")
+		"${major}.${minor}.${f.format(date)}"
+	}
+	
+}
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -55,5 +73,16 @@ tasks.withType(FindBugs) {
 	reports {
 		xml.enabled = true
 		html.enabled = false
+	}
+}
+
+uploadArchives {
+	repositories {
+		mavenDeployer {
+			repository(url: "file://$buildDir/repo/")
+			pom.project {
+				description "Continuous integration jumpstart class artefact"
+			}
+		}
 	}
 }

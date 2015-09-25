@@ -1,0 +1,32 @@
+apply plugin: 'jacoco'
+test {
+	jacoco {
+		enabled = Boolean.valueOf(System.getProperty('codeCoverageEnabled', 'false'))
+		destinationFile = file("$buildDir/jacoco/unit/jacocoTest.exec")
+		classDumpFile = file("$buildDir/jacoco/unit/classpathdumps")
+	}
+}
+integrationTest {
+	jacoco {
+		enabled = Boolean.valueOf(System.getProperty('codeCoverageEnabled', 'false'))
+		destinationFile = file("$buildDir/jacoco/integration/jacocoTest.exec")
+		classDumpFile = file("$buildDir/jacoco/integration/classpathdumps")
+	}
+}
+jacocoTestReport {
+	reports {
+		xml.enabled false
+		csv.enabled false
+		html.destination "${buildDir}/jacoco/unit/jacocoHtml"
+	}
+}
+
+task jacocoIntegTestReport(type: JacocoReport){
+	executionData integrationTest
+	sourceSets sourceSets.main
+	reports {
+		xml.enabled false
+		csv.enabled false
+		html.destination "${buildDir}/jacoco/integration/jacocoHtml"
+	}
+}
